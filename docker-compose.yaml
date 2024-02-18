@@ -1,0 +1,22 @@
+version: '3'
+services:
+  server:
+    build:
+      context: ./service
+      dockerfile: Dockerfile
+    ports:
+      - 9999:8080
+    develop:
+      watch:
+        - action: sync
+          path: ./service
+          target: /app
+          ignore:
+            - node_modules/
+  neo4j:
+    image: neo4j:community
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      - NEO4J_AUTH=none
